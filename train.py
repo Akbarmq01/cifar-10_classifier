@@ -86,7 +86,7 @@ class Train(object):
 		self.load_model()
 		for epoch in range(1, self.epoch+1):
 			self.schedular.step(epoch)
-			print("### Epoch : %d of " %epoch +str(self.epoch))
+			print("Epoch : %d of " %epoch +str(self.epoch))
 			train_result = self.train()
 			print(train_result)
 			test_result = self.test()
