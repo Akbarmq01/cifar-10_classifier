@@ -10,6 +10,7 @@ cfg = {
 
 class VGG(nn.Module):
 	def __init__(self, VGG_model_name):
+		print('VGG Initialized for model : ', VGG_model_name)
 		super(VGG, self).__init__()
 		self.conv_layers = self.vgg_layers(cfg[VGG_model_name])
 		self.fully_connected_layers = nn.Sequential(
@@ -18,7 +19,7 @@ class VGG(nn.Module):
 									  nn.ReLU(inplace=True),
 									  nn.Dropout(),
 									  nn.Linear(512,512),
-									  nn.ReLU(inplace=True)
+									  nn.ReLU(inplace=True),
 									  nn.Linear(512,10)
 									)
 
@@ -35,3 +36,22 @@ class VGG(nn.Module):
 				in_channel = x
 		layers += [nn.AvgPool2d(kernel_size=1, stride=1)]
 		return nn.Sequential(*layers)
+
+	def forward(self,x):
+		out = self.conv_layers(x)
+		out = out.view(out.size(0), -1)
+		out = self.fully_connected_layers(out)
+		return out
+
+
+def VGG11():
+	return VGG("VGG11")
+
+def VGG13():
+	return VGG("VGG13")
+
+def VGG16():
+	return VGG("VGG16")
+
+def VGG19():
+	return VGG("VGG19")
