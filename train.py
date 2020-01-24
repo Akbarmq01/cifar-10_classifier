@@ -7,6 +7,7 @@ from torchvision import transforms as transforms
 from model.lenet import Lenet
 from model.AlexNet import AlexNet
 from model.Vgg import *
+from model.ResNet import *
 
 class Train(object):
 	def __init__(self, config):
@@ -41,7 +42,8 @@ class Train(object):
 			self.device = torch.device('cpu')
 		# self.model = Lenet().to(self.device)
 		# self.model = AlexNet().to(self.device)
-		self.model = VGG11().to(self.device)
+		# self.model = VGG11().to(self.device)
+		self.model = resnet18().to(self.device)
 		self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr)
 		self.schedular = optim.lr_scheduler.MultiStepLR(self.optimizer, milestones=[75,150],gamma=0.5)
 		self.criterion = nn.CrossEntropyLoss().to(self.device)
